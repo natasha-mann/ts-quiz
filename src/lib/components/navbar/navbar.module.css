@@ -1,0 +1,6 @@
+.navbar {
+  display: flex;
+  height: 5rem;
+  background-color: aliceblue;
+  justify-content: center;
+}

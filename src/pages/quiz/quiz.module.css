@@ -1,0 +1,27 @@
+.quizContainer {
+  justify-content: center;
+  padding: 2rem;
+}
+
+.question {
+  text-align: center;
+}
+
+.answersContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.answer {
+  padding: 1rem;
+  margin: 0.5rem;
+  background-color: gainsboro;
+  border: none;
+  font-weight: bold;
+}
+
+.answer:hover {
+  background-color: darkblue;
+  color: white;
+  cursor: pointer;
+}
