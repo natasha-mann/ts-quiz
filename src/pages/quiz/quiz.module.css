@@ -3,6 +3,11 @@
   padding: 2rem;
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
 .question {
   text-align: center;
 }

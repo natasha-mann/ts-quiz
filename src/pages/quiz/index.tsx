@@ -1,27 +1,46 @@
 import { SyntheticEvent, useEffect, useState } from "react";
-import { Button } from "../../lib/components/button";
+import { GameOver } from "./components/GameOver";
 import styles from "./quiz.module.css";
 
-export type Question = { title: string; choices: string[]; answer: string };
+export interface Question {
+  title: string;
+  choices: string[];
+  answer: string;
+}
 
-type QuizProps = {
+interface QuizProps {
   questions: Question[];
-};
+}
 
 export const Quiz = ({ questions }: QuizProps) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
+  const [timer, setTimer] = useState(questions.length * 10);
+
+  useEffect(() => {
+    const countdown = setTimeout(() => {
+      setTimer(timer - 1);
+    }, 1000);
+
+    if (timer === 0 || gameOver) {
+      clearTimeout(countdown);
+      setGameOver(true);
+    }
+
+    return () => clearTimeout(countdown);
+  }, [timer, gameOver]);
 
   const handleCheckAnswer = (event: SyntheticEvent) => {
-    console.log("checking");
     const selectedAnswer = event.target as HTMLInputElement;
     if (
       selectedAnswer.dataset.answer === questions[currentQuestionIndex].answer
     ) {
-      console.log("correct");
       setScore(score + 1);
+    } else {
+      timer >= 10 ? setTimer(timer - 10) : setTimer(0);
     }
+
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     }
@@ -35,10 +54,15 @@ export const Quiz = ({ questions }: QuizProps) => {
 
   return (
     <div className={styles.quizContainer}>
-      <div>Score: {score}</div>
-      {gameOver && <div>GAME OVER</div>}
+      {gameOver && (
+        <GameOver numberOfQuestions={questions.length} score={score} />
+      )}
       {!gameOver && (
         <>
+          <div className={styles.header}>
+            <div>Score: {score}</div>
+            <div>Time Remaining: {timer}</div>
+          </div>
           <h1 className={styles.question}>{currentQuestion.title}</h1>
           <div className={styles.answersContainer}>
             {currentQuestion.choices.map((choice, index) => {

@@ -63,8 +63,10 @@ export const Main = () => {
   return (
     <>
       {!isQuiz && (
-        <form id="start-form">
-          <div className="container py-3 text-center">
+        <form id="start-form" className={styles.form}>
+          <h2 className={styles.text}>Select your questions:</h2>
+
+          <div className={styles.checkboxes}>
             <Input
               type="checkbox"
               id="javascriptCheckbox"
@@ -85,7 +87,6 @@ export const Main = () => {
             />
           </div>
 
-          <p className={styles.text}>Click here to start the quiz!</p>
           <Button
             type="button"
             onClick={handleClick}
