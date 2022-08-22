@@ -1,10 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Main } from "../pages/main";
-import { Quiz } from "../pages/quiz";
 
 import { AppLayout } from "./AppLayout";
 
-import { ROUTE_MAIN, ROUTE_QUIZ } from "./constants";
+import { ROUTE_MAIN } from "./constants";
 
 export const Router = () => {
   return (

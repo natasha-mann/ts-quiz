@@ -1,11 +1,11 @@
 import styles from "./button.module.css";
 
-type ButtonProps = {
+interface ButtonProps {
   onClick: () => void;
   label: string;
   type: "submit" | "reset" | "button";
   id: string;
-};
+}
 
 export const Button = ({
   type = "button",
