@@ -8,34 +8,15 @@ import {
   htmlQuestions,
   cssQuestions,
 } from "../../utils/questions";
-
-const shuffleQuestions = (array: Question[]) => {
-  let currentIndex = array.length;
-
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
-    // Pick a remaining element...
-    const randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    // And swap it with the current element.
-    const temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-
-  return array;
-};
+import { shuffleQuestions } from "../../utils/utils";
 
 export const Main = () => {
-  const [questions, setQuestions] = useState<
-    {
-      title: string;
-      choices: string[];
-      answer: string;
-    }[]
-  >();
+  const [questions, setQuestions] = useState<Question[]>();
   const [isQuiz, setIsQuiz] = useState(false);
+  const [error, setError] = useState<{ error: boolean; message: string }>({
+    error: false,
+    message: "",
+  });
 
   const handleClick = () => {
     const javascriptCheck = document.getElementById(
@@ -54,10 +35,17 @@ export const Main = () => {
     if (cssCheck.checked) selectedQuestions.push(...htmlQuestions);
     if (htmlCheck.checked) selectedQuestions.push(...cssQuestions);
 
-    const shuffledQs = shuffleQuestions(selectedQuestions);
+    if (!selectedQuestions.length) {
+      setError({
+        error: true,
+        message: "Please select at least one set of questions!",
+      });
+    } else {
+      const shuffledQs = shuffleQuestions(selectedQuestions);
 
-    setQuestions(shuffledQs);
-    setIsQuiz(true);
+      setQuestions(shuffledQs);
+      setIsQuiz(true);
+    }
   };
 
   return (
@@ -93,6 +81,7 @@ export const Main = () => {
             label="START QUIZ"
             id="start-btn"
           />
+          {error.error && <h5 className={styles.error}>{error.message}</h5>}
         </form>
       )}
 

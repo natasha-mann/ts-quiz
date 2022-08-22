@@ -15,16 +15,16 @@ export const GameOver = ({ score, numberOfQuestions }: GameOverParams) => {
     <div className={styles.gameOver}>
       <div className={styles.heading}>GAME OVER</div>
       <div className={styles.gameInfo}>
-        <div>
+        <h3>
           Score: {score} / {numberOfQuestions}{" "}
-        </div>
+        </h3>
+        <Button
+          type="button"
+          label="Try Again"
+          id="reset"
+          onClick={handleClick}
+        />
       </div>
-      <Button
-        type="button"
-        label="Try Again"
-        id="reset"
-        onClick={handleClick}
-      />
     </div>
   );
 };
