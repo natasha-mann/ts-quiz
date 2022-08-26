@@ -36,7 +36,7 @@ export const Quiz = ({ questions }: QuizProps) => {
     if (
       selectedAnswer.dataset.answer === questions[currentQuestionIndex].answer
     ) {
-      setScore(score + 1);
+      setScore(score + 10);
     } else {
       timer >= 10 ? setTimer(timer - 10) : setTimer(0);
     }
