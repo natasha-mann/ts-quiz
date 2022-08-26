@@ -18,22 +18,34 @@ export const Main = () => {
     message: "",
   });
 
+  const getSelectedQuestions = (
+    checkboxes: NodeListOf<HTMLInputElement>
+  ): Question[] => {
+    const selectedQuestions = [] as Question[];
+
+    checkboxes.forEach((checkbox) => {
+      if (checkbox.checked) {
+        switch (checkbox.value) {
+          case "javascript":
+            selectedQuestions.push(...javascriptQuestions);
+            break;
+          case "html":
+            selectedQuestions.push(...htmlQuestions);
+            break;
+          case "css":
+            selectedQuestions.push(...cssQuestions);
+            break;
+        }
+      }
+    });
+
+    return selectedQuestions;
+  };
+
   const handleClick = () => {
-    const javascriptCheck = document.getElementById(
-      "javascriptCheckbox"
-    )! as HTMLInputElement;
-    const cssCheck = document.getElementById(
-      "cssCheckbox"
-    )! as HTMLInputElement;
-    const htmlCheck = document.getElementById(
-      "htmlCheckbox"
-    )! as HTMLInputElement;
+    const checkboxes = document.querySelectorAll("input");
 
-    const selectedQuestions = [];
-
-    if (javascriptCheck.checked) selectedQuestions.push(...javascriptQuestions);
-    if (cssCheck.checked) selectedQuestions.push(...htmlQuestions);
-    if (htmlCheck.checked) selectedQuestions.push(...cssQuestions);
+    const selectedQuestions = getSelectedQuestions(checkboxes);
 
     if (!selectedQuestions.length) {
       setError({
@@ -67,12 +79,7 @@ export const Main = () => {
               value="html"
               label="HTML"
             />
-            <Input
-              type="checkbox"
-              id="cssCheckbox"
-              value="htmcssl"
-              label="CSS"
-            />
+            <Input type="checkbox" id="cssCheckbox" value="css" label="CSS" />
           </div>
 
           <Button
